@@ -1,0 +1,1 @@
+/Users/sylvainsaucier/Software/PoorerPoint/target/release/poorerpoint: /Users/sylvainsaucier/Software/PoorerPoint/src/app.rs /Users/sylvainsaucier/Software/PoorerPoint/src/main.rs /Users/sylvainsaucier/Software/PoorerPoint/src/parse.rs /Users/sylvainsaucier/Software/PoorerPoint/src/render.rs
