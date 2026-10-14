@@ -32,7 +32,7 @@ and no theme will save them.
 ## Install
 
 ```sh
-git clone https://github.com/<you>/poorerpoint
+git clone https://github.com/sysaulab/poorerpoint
 cd poorerpoint
 cargo build --release
 ```
