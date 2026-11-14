@@ -19,11 +19,11 @@ struct Cli {
     deck: PathBuf,
 
     /// Title animation duration in milliseconds (0 = instant)
-    #[arg(short = 't', long, value_name = "MS", default_value_t = 333)]
+    #[arg(short = 't', long, value_name = "MS", default_value_t = 500)]
     title_animation: u64,
 
     /// Body block stagger in milliseconds (0 = all blocks at once)
-    #[arg(short = 'b', long, value_name = "MS", default_value_t = 55)]
+    #[arg(short = 'b', long, value_name = "MS", default_value_t = 250)]
     body_animation: u64,
 }
 
@@ -43,7 +43,6 @@ fn main() -> io::Result<()> {
         ..Default::default()
     };
 
-    // restore terminal on panic
     let hook = std::panic::take_hook();
     std::panic::set_hook(Box::new(move |info| {
         let _ = disable_raw_mode();
@@ -60,8 +59,11 @@ fn main() -> io::Result<()> {
 
     let res = app::run(&mut terminal, slides, timings);
 
-    disable_raw_mode()?;
-    execute!(terminal.backend_mut(), LeaveAlternateScreen)?;
-    terminal.show_cursor()?;
+    // Ignore cleanup errors individually: a failure in `disable_raw_mode`
+    // must not skip `LeaveAlternateScreen` (which would leave the terminal
+    // stuck in the alternate screen with the cursor hidden).
+    let _ = disable_raw_mode();
+    let _ = execute!(terminal.backend_mut(), LeaveAlternateScreen);
+    let _ = terminal.show_cursor();
     res
 }
