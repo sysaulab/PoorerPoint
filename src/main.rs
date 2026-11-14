@@ -3,28 +3,45 @@ mod parse;
 mod render;
 
 use std::io::{self, stdout};
+use std::path::PathBuf;
 
+use clap::Parser;
 use crossterm::{
-    event::{self, Event, KeyEventKind},
     execute,
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
 use ratatui::{backend::CrosstermBackend, Terminal};
 
+#[derive(Parser, Debug)]
+#[command(name = "poorerpoint", version, about = "A terminal presentation engine. Markdown in, ASCII out.")]
+struct Cli {
+    /// Path to the markdown deck
+    deck: PathBuf,
+
+    /// Title animation duration in milliseconds (0 = instant)
+    #[arg(short = 't', long, value_name = "MS", default_value_t = 333)]
+    title_animation: u64,
+
+    /// Body block stagger in milliseconds (0 = all blocks at once)
+    #[arg(short = 'b', long, value_name = "MS", default_value_t = 55)]
+    body_animation: u64,
+}
+
 fn main() -> io::Result<()> {
-    let path = match std::env::args().nth(1) {
-        Some(p) => p,
-        None => {
-            eprintln!("usage: poorerpoint <deck.md>");
-            std::process::exit(2);
-        }
-    };
-    let src = std::fs::read_to_string(&path)?;
+    let cli = Cli::parse();
+
+    let src = std::fs::read_to_string(&cli.deck)?;
     let slides = parse::parse(&src);
     if slides.is_empty() {
-        eprintln!("poorerpoint: no slides in {path}");
+        eprintln!("poorerpoint: no slides in {}", cli.deck.display());
         std::process::exit(1);
     }
+
+    let timings = app::Timings {
+        title_ms: cli.title_animation,
+        content_stagger_ms: cli.body_animation,
+        ..Default::default()
+    };
 
     // restore terminal on panic
     let hook = std::panic::take_hook();
@@ -41,7 +58,7 @@ fn main() -> io::Result<()> {
     terminal.hide_cursor()?;
     terminal.clear()?;
 
-    let res = app::run(&mut terminal, slides);
+    let res = app::run(&mut terminal, slides, timings);
 
     disable_raw_mode()?;
     execute!(terminal.backend_mut(), LeaveAlternateScreen)?;

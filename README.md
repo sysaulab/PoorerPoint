@@ -1,9 +1,38 @@
 
+```
+  .-----------------------------------------------------------------.
+ /  .-.                                                         .-.  \
+|  /   \                                                       /   \  |
+| |\_.  |                                                     |    /| |
+|\|  | /|                     POORERPOINT                     |\  | |/|
+| `---' |                                                     | `---' |
+|       |                                                     |       |
+|       |-----------------------------------------------------|       |
+\       |                                                     |       /
+ \     /                                                       \     /
+  `---'                                                         `---'
+
+
+
+                                          A
+             ___                         / \
+          .="   "=._.---.               /   \              ____________________________________
+        ."         c ' Y'`p            /     \            /)  -
+       /     \     `\  w_/            :~~~~~~~:          / )-   .   -
+ jgs   |      )  /     /              |       |         <  )      -- 
+ ______|     /__-\ \_=.\              |       |          \ )  -      -
+(XXXXX/'`------)))`=-'"`'"___________/__/__\___\___ _ _ _ \)___________________________________
+ ~~~~~
+```
+
 # poorerpoint
 
 A terminal presentation engine. Markdown in, ASCII out.
 
-Spacebar advances. Headers persist. Content flows. Nothing else.
+- Spacebar advances. 
+- Headers persist. 
+- Content flows. 
+- Nothing else.
 
 ---
 
@@ -52,39 +81,6 @@ poorerpoint deck.md
 Input is a file, always. No stdin, no config, no arguments beyond the path.
 
 ---
-
-## Writing a deck
-
-Regular markdown. Headers are titles and subtitles; content under a header is
-a slide.
-
-```markdown
-# poorerpoint
-
-A terminal presentation engine.
-
-## Why
-
-- Markdown in, ASCII out
-- Headers stick, content flows
-- Space is the only button you need
-
-## How
-
-### Parsing
-
-Headers mutate a **sticky stack**.
-Content attaches to the current stack.
-
-### Rendering
-
-Titles slide in from the right.
-Bullets follow, one every 55 ms.
-
-# Fin
-
-Space to leave.
-```
 
 ### The rules
 
@@ -145,29 +141,20 @@ visible. Manual scrolling is there for the presenter when a slide runs long.
 
 ## Archaeology
 
-This is the third version.
+This is the second version.
 
-**asciishow** was the first — a curses program with a custom DSL. Every deck
+**asciishow** was the first — a curses program with a custom DSL (domain specific language). Every deck
 opened with a settings block, then `!CONTENT!`, then commands: `!slide`,
 `!label`, `!wait`, `!center`, `!indent`. You could place text at absolute
 coordinates, choose per-command animation speeds, and type a title
 character-by-character at 100 fps. It was more expressive than what came
 after, and that was exactly the problem: it had one speaker.
 
-**poorerpoint.py** was the second. Same DSL, finally named. Still no model of
-a slide — persistence was achieved by *not clearing the curses window*, the
-same trick PowerPoint makes you do by hand. It worked, and it was forgotten,
-by its own author, within a few years. A private language dies with the mood
-that invented it.
-
 **poorerpoint** (this one) replaced the DSL with markdown, deleted every
 layout command, and added exactly one thing the predecessors never had: a
 data structure. `Slide { stack, anim, blocks }`. Everything else is a rounding
 of what was already there.
 
-The first two were written at 2pm on the patio of the cheapest hotel in
-Managua, half a drink in, annoyed at a subscription fee. That is the whole
-origin story. It is not a dramatic one. It is, on reflection, the correct one.
 
 ---
 
@@ -195,4 +182,21 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```
+
+## Q&A
+
+```
+
+
+
+    _,.---._                     ,----.    ,-,--.  ,--.--------.  .=-.-.  _,.---._    .-._          ,-,--.  ,--,---.  
+  ,-.' - ,  `.   .--.-. .-.-. ,-.--` , \ ,-.'-  _\/==/,  -   , -\/==/_ /,-.' , -  `. /==/ \  .-._ ,-.'-  _\/==/ - ` \ 
+ /==/ ,    -  \ /==/ -|/=/  ||==|-  _.-`/==/_ ,_.'\==\.-.  - ,-./==|, |/==/_,  ,  - \|==|, \/ /, /==/_ ,_.'\==\/\ - | 
+|==| - .=.  ,  ||==| ,||=| -||==|   `.-.\==\  \    `--`\==\- \  |==|  |==|   .=.     |==|-  \|  |\==\  \    `--`/ `/  
+|==|  : ;=:  - ||==|- | =/  /==/_ ,    / \==\ -\        \==\_ \ |==|- |==|_ : ;=:  - |==| ,  | -| \==\ -\    |==|  |  
+|==|,  '='  ,  ||==|,  \/ - |==|    .-'  _\==\ ,\       |==|- | |==| ,|==| , '='     |==| -   _ | _\==\ ,\   `--`--`  
+ \==\ _   -    ;|==|-   ,   /==|_  ,`-._/==/\/ _ |      |==|, | |==|- |\==\ -    ,_ /|==|  /\ , |/==/\/ _ |    .=.    
+  '.='.  ,  ; -\/==/ , _  .'/==/ ,     /\==\ - , /      /==/ -/ /==/. / '.='. -   .' /==/, | |- |\==\ - , /   :=; :   
+    `--`--'' `--`--`..---'  `--`-----``  `--`---'       `--`--` `--`-`    `--`--''   `--`./  `--` `--`---'     `=`    
 ```
